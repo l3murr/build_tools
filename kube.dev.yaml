@@ -1,0 +1,91 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: $$-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: $$-mysql
+  template:
+    metadata:
+      labels:
+        app: $$-mysql
+    spec:
+      containers:
+        - image: mysql:8
+          name: $$-mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/www/html
+      volumes:
+        - name: mysql-persistent-storage
+          hostPath:
+            path: /data/code
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: $$-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: $$-server
+  template:
+    metadata:
+      labels:
+        app: $$-server
+    spec:
+      containers:
+        - image: tms-server:v2
+          imagePullPolicy: Never
+          name: $$-server
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - name: server-persistent-storage
+              mountPath: /var/www/html
+          envFrom:
+            - configMapRef:
+                name: application-config
+            - secretRef:
+                name: application-secret
+      volumes:
+        - name: server-persistent-storage
+          hostPath:
+            path: /data/db
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: $$-websocket
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: $$-websocket
+  template:
+    metadata:
+      labels:
+        app: $$-websocket
+    spec:
+      containers:
+        - image: centrifugo/centrifugo:v6
+          name: $$-websocket
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+          ports:
+            - containerPort: 8000
+              name: websocket
