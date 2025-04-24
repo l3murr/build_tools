@@ -47,20 +47,12 @@ spec:
         - image: tms-server:v2
           imagePullPolicy: Never
           name: $$-server
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: password
           ports:
             - containerPort: 80
               name: http
           volumeMounts:
             - name: server-persistent-storage
               mountPath: /var/www/html
-          envFrom:
-            - configMapRef:
-                name: application-config
-            - secretRef:
-                name: application-secret
       volumes:
         - name: server-persistent-storage
           hostPath:
