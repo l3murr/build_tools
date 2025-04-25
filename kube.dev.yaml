@@ -90,7 +90,7 @@ metadata:
   name: server-service
 spec:
   selector:
-    app.kubernetes.io/name: server
+    app.kubernetes.io/name: $$-server
   ports:
     - protocol: TCP
       port: 8080
