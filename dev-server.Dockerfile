@@ -42,4 +42,4 @@ bash
 
 WORKDIR /var/www/html
 
-ENTRYPOINT rr serve -c /var/www/html/server/.rr.yaml
+ENTRYPOINT "/root/docker-entrypoint.sh"
