@@ -95,4 +95,4 @@ spec:
   ports:
     - protocol: TCP
       port: 8080
-      targetPort: coder
+      targetPort: 8080
