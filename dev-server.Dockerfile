@@ -35,6 +35,8 @@ RUN echo "#!/bin/sh"\
 "rr serve -c /var/www/html/server/.rr.yaml"\
 "bash"\
 >> /root/docker-entrypoint.sh
+RUN dos2unix /root/docker-entrypoint.sh
+RUN chmod +x /root/docker-entrypoint.sh
 
 WORKDIR /var/www/html
 
