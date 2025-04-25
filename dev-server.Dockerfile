@@ -40,4 +40,5 @@ RUN chmod +x /root/docker-entrypoint.sh
 
 WORKDIR /var/www/html
 
-ENTRYPOINT "/root/docker-entrypoint.sh"
+ENTRYPOINT ["tail"]
+CMD ["-f","/dev/null"]
