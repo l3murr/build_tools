@@ -86,10 +86,10 @@ spec:
 ---
 apiVersion: v1
 kind: Service
-type: NodePort
 metadata:
   name: server-service
 spec:
+  type: NodePort
   selector:
     app.kubernetes.io/name: $$-server
   ports:
