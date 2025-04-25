@@ -19,26 +19,22 @@ RUN mkdir -p /etc/apt/keyrings && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     ~/.cargo/bin/rustup install nightly-2024-05-20 && \
     curl -fsSL https://code-server.dev/install.sh | sh
-RUN echo "
-#!/bin/sh
-
-cd /var/www/html/server
-
-FILE=/tmp/composer.ran
-if [ -f $FILE ]; then
-    echo "chowning /var/www/html/backend/storage/ for www-data"
-    chown -R www-data:www-data /var/www/html/backend/storage/
-else
-    echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
-    echo "chowning /var/www/html/backend/storage/ for www-data"
-    chown -R www-data:www-data /var/www/html/backend/storage/
-    touch $FILE
-fi
-
-mkdir /var/run/php
-rr serve -c /var/www/html/server/.rr.yaml
-bash
-" >> /root/docker-entrypoint.sh
+RUN echo "#!/bin/sh"\
+"cd /var/www/html/server"\
+"FILE=/tmp/composer.ran"\
+"if [ -f $FILE ]; then"\
+"    echo "chowning /var/www/html/backend/storage/ for www-data""\
+"    chown -R www-data:www-data /var/www/html/backend/storage/"\
+"else"\
+"    echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config"\
+"    echo "chowning /var/www/html/backend/storage/ for www-data""\
+"    chown -R www-data:www-data /var/www/html/backend/storage/"\
+"    touch $FILE"\
+"fi"\
+"mkdir /var/run/php"\
+"rr serve -c /var/www/html/server/.rr.yaml"\
+"bash"\
+>> /root/docker-entrypoint.sh
 
 WORKDIR /var/www/html
 
