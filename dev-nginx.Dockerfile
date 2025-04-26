@@ -27,36 +27,36 @@ RUN echo 'server {\n\
         proxy_set_header Upgrade $http_upgrade;\n\
         proxy_set_header Connection "upgrade";\n\
         proxy_set_header Host $host;\n\
-        proxy_pass http://main-websocket.default.svc.cluster.local:9000/connection/websocket;\n\
+        proxy_pass http://websocket-1.default.svc.cluster.local:9000/connection/websocket;\n\
     }\n\
 \n\
     location /@vite {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
-        proxy_pass http://main-server.default.svc.cluster.local:5173;\n\
+        proxy_pass http://server-1.default.svc.cluster.local:5173;\n\
         proxy_set_header Host $host;\n\
     }\n\
 \n\
     location /@id {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
-        proxy_pass http://main-server.default.svc.cluster.local:5173;\n\
+        proxy_pass http://server-1.default.svc.cluster.local:5173;\n\
         proxy_set_header Host $host;\n\
     }\n\
 \n\
     location /resources {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
-        proxy_pass http://main-server.default.svc.cluster.local:5173;\n\
+        proxy_pass http://server-1.default.svc.cluster.local:5173;\n\
         proxy_set_header Host $host;\n\
     }\n\
 \n\
     location /node_modules {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
-        proxy_pass http://main-server.default.svc.cluster.local:5173;\n\
+        proxy_pass http://server-1.default.svc.cluster.local:5173;\n\
         proxy_set_header Host $host;\n\
     }\n\
         \n\
     location / {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
-        proxy_pass http://main-server.default.svc.cluster.local;\n\
+        proxy_pass http://server-1.default.svc.cluster.local;\n\
         proxy_set_header Host $host;\n\
     }\n\
 }\n\
@@ -73,7 +73,7 @@ server {\n\
         proxy_http_version 1.1;\n\
         proxy_set_header Upgrade $http_upgrade;\n\
         proxy_set_header Connection "upgrade";\n\
-        proxy_pass http://main-server.default.svc.cluster.local:5173;\n\
+        proxy_pass http://server-1.default.svc.cluster.local:5173;\n\
         proxy_set_header Host $host;\n\
     }\n\
 }\n\
