@@ -3,7 +3,7 @@ ARG APP_URL
 ARG SAN
 ENV APP_URL=$APP_URL
 ENV SAN=$SAN
-RUN echo $SAN
+RUN echo "$SAN"
 RUN printf "\n[SAN]\nsubjectAltName=${SAN}" >> /etc/ssl/openssl.cnf
 RUN echo "subjectAltName=${SAN}" >> /extfile
 RUN openssl genrsa -aes256 --passout pass:timeless -out /etc/ssl/private/wai-ca.key 4096
