@@ -1,8 +1,8 @@
 FROM nginx:1.27.4
 ARG APP_URL=localhost
 ARG SAN=DNS:localhost
-RUN printf "\n[SAN]\nsubjectAltName=$SAN" >> /etc/ssl/openssl.cnf
-RUN echo "subjectAltName=$SAN" >> /extfile
+RUN printf "\n[SAN]\nsubjectAltName=${SAN}" >> /etc/ssl/openssl.cnf
+RUN echo "subjectAltName=${SAN}" >> /extfile
 RUN openssl genrsa -aes256 --passout pass:timeless -out /etc/ssl/private/wai-ca.key 4096
 RUN openssl req --passin pass:timeless -new -key /etc/ssl/private/wai-ca.key -x509 -out /etc/ssl/certs/wai-ca.crt -days 3650 -subj "/C=DE/ST=Hamburg/L=Hamburg/O=Top/OU=Cheese/CN=${APP_URL}" -reqexts SAN -config "/etc/ssl/openssl.cnf"
 RUN openssl req -new -nodes -newkey rsa:4096 -keyout /etc/ssl/private/wai.key -out /etc/ssl/certs/wai.req -batch -subj "/C=DE/ST=Hamburg/L=Hamburg/O=Top/OU=Cheese/CN=${APP_URL}" -reqexts SAN -config "/etc/ssl/openssl.cnf"
