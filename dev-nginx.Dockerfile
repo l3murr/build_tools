@@ -1,6 +1,8 @@
 FROM nginx:1.27.4
 ARG APP_URL
 ARG SAN
+ENV APP_URL=$APP_URL
+ENV SAN=$SAN
 RUN echo $SAN
 RUN printf "\n[SAN]\nsubjectAltName=${SAN}" >> /etc/ssl/openssl.cnf
 RUN echo "subjectAltName=${SAN}" >> /extfile
