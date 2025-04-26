@@ -1,0 +1,73 @@
+FROM nginx:1.27.4
+ARG APP_URL
+ARG SAN
+RUN printf '\n[SAN]\nsubjectAltName=SAN' >> /etc/ssl/openssl.cnf
+RUN echo "subjectAltName=" >> /extfile
+RUN openssl genrsa -aes256 --passout pass:timeless -out /etc/ssl/private/wai-ca.key 4096
+RUN openssl req --passin pass:timeless -new -key /etc/ssl/private/wai-ca.key -x509 -out /etc/ssl/certs/wai-ca.crt -days 3650 -subj "/C=DE/ST=Hamburg/L=Hamburg/O=Top/OU=Cheese/CN=${APP_URL}" -reqexts SAN -config "/etc/ssl/openssl.cnf"
+RUN openssl req -new -nodes -newkey rsa:4096 -keyout /etc/ssl/private/wai.key -out /etc/ssl/certs/wai.req -batch -subj "/C=DE/ST=Hamburg/L=Hamburg/O=Top/OU=Cheese/CN=${APP_URL}" -reqexts SAN -config "/etc/ssl/openssl.cnf"
+RUN openssl x509 --passin pass:timeless -req -in /etc/ssl/certs/wai.req -CA /etc/ssl/certs/wai-ca.crt -CAkey /etc/ssl/private/wai-ca.key -CAcreateserial -out /etc/ssl/certs/wai.crt -days 3650 -sha256 -extfile "/extfile"
+RUN cat /etc/ssl/private/wai.key > /etc/ssl/certs/wai-chain.crt
+RUN cat /etc/ssl/certs/wai.crt >> /etc/ssl/certs/wai-chain.crt
+RUN cat /etc/ssl/certs/wai-ca.crt >> /etc/ssl/certs/wai-chain.crt
+RUN echo 'server {\n\
+    listen              443 ssl;\n\
+    ssl_certificate     /etc/ssl/certs/wai.crt;\n\
+    ssl_certificate_key /etc/ssl/private/wai.key;\n\
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;\n\
+    ssl_ciphers         HIGH:!aNULL:!MD5;\n\
+\n\
+    location /cert.crt {\n\
+        alias /etc/ssl/certs/wai-ca.crt;\n\
+    }\n\
+\n\
+    location /api/context {\n\
+        proxy_http_version 1.1;\n\
+        proxy_set_header Upgrade $http_upgrade;\n\
+        proxy_set_header Connection "upgrade";\n\
+        proxy_set_header Host $host;\n\
+        proxy_pass http://host.docker.internal:9003/connection/websocket;\n\
+    }\n\
+\n\
+    location /@vite {\n\
+        proxy_pass http://host.docker.internal:6173;\n\
+        proxy_set_header Host $host;\n\
+    }\n\
+\n\
+    location /@id {\n\
+        proxy_pass http://host.docker.internal:6173;\n\
+        proxy_set_header Host $host;\n\
+    }\n\
+\n\
+    location /resources {\n\
+        proxy_pass http://host.docker.internal:6173;\n\
+        proxy_set_header Host $host;\n\
+    }\n\
+\n\
+    location /node_modules {\n\
+        proxy_pass http://host.docker.internal:6173;\n\
+        proxy_set_header Host $host;\n\
+    }\n\
+        \n\
+    location / {\n\
+        proxy_pass http://host.docker.internal:83;\n\
+        proxy_set_header Host $host;\n\
+    }\n\
+}\n\
+\n\
+server {\n\
+    listen              5173 ssl;\n\
+    ssl_certificate     /etc/ssl/certs/wai.crt;\n\
+    ssl_certificate_key /etc/ssl/private/wai.key;\n\
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;\n\
+    ssl_ciphers         HIGH:!aNULL:!MD5;\n\
+        \n\
+    location / {\n\
+        proxy_http_version 1.1;\n\
+        proxy_set_header Upgrade $http_upgrade;\n\
+        proxy_set_header Connection "upgrade";\n\
+        proxy_pass http://host.docker.internal:6173;\n\
+        proxy_set_header Host $host;\n\
+    }\n\
+}\n\
+' >> /etc/nginx/conf.d/default.conf
