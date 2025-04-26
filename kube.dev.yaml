@@ -49,13 +49,13 @@ spec:
           name: nginx
           ports:
             - containerPort: 443
-              name: https_1
+              name: https-1
             - containerPort: 444
-              name: https_2
+              name: https-2
             - containerPort: 445
-              name: https_3
+              name: https-3
             - containerPort: 446
-              name: https_4
+              name: https-4
             - containerPort: 8080
               name: coder
 ---
