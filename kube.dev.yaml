@@ -1,20 +1,20 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: $$-mysql
+  name: mysql-$$
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $$-mysql
+      app: mysql-$$
   template:
     metadata:
       labels:
-        app: $$-mysql
+        app: mysql-$$
     spec:
       containers:
         - image: mysql:8
-          name: $$-mysql
+          name: mysql-$$
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: password
@@ -27,7 +27,7 @@ spec:
       volumes:
         - name: mysql-persistent-storage
           hostPath:
-            path: /data/$$-code
+            path: /data/code_$$
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -62,21 +62,21 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: $$-server
+  name: server-$$
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: $$-server
+      app: server-$$
   template:
     metadata:
       labels:
-        app: $$-server
+        app: server-$$
     spec:
       containers:
         - image: tms-server:v2
           imagePullPolicy: Never
-          name: $$-server
+          name: server-$$
           ports:
             - containerPort: 80
               name: http
@@ -88,30 +88,30 @@ spec:
       volumes:
         - name: server-persistent-storage
           hostPath:
-            path: /data/$$-db
+            path: /data/db_$$
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: $$-websocket
+  name: websocket-$$
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $$-websocket
+      app: websocket-$$
   template:
     metadata:
       labels:
-        app: $$-websocket
+        app: websocket-$$
     spec:
       containers:
         - image: centrifugo/centrifugo:v6
-          name: $$-websocket
+          name: websocket-$$
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: password
           ports:
-            - containerPort: 8000
+            - containerPort: 9000
               name: websocket
 ---
 apiVersion: v1
@@ -135,7 +135,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app.kubernetes.io/name: $$-server-service
+    app.kubernetes.io/name: server-service-$$
   ports:
     - protocol: HTTP
       port: 8080
