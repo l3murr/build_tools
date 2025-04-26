@@ -1,9 +1,6 @@
-ARG APP_URL
-ARG SAN
 FROM nginx:1.27.4
 ARG APP_URL
 ARG SAN
-RUN echo $SAN
 RUN SAN=$(echo "${SAN}") && printf "\n[SAN]\nsubjectAltName=${SAN}" >> /etc/ssl/openssl.cnf
 RUN SAN=$(echo "${SAN}") && echo "subjectAltName=${SAN}" >> /extfile
 RUN openssl genrsa -aes256 --passout pass:timeless -out /etc/ssl/private/wai-ca.key 4096
