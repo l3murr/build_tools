@@ -99,6 +99,9 @@ spec:
           volumeMounts:
             - name: server-persistent-storage
               mountPath: /var/www/html
+            - name: ssh-keys
+              readOnly: true
+              mountPath: "/root/.ssh"
       volumes:
         - name: server-persistent-storage
           hostPath:
