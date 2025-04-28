@@ -1,8 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  labels:
-    name: mysql-$$
+  name: mysql-$$
 spec:
   replicas: 1
   template:
@@ -27,8 +26,7 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  labels:
-    name: nginx
+  name: nginx
 spec:
   replicas: 1
   template:
@@ -66,8 +64,7 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  labels:
-    name: server-$$
+  name: server-$$
 spec:
   replicas: 2
   template:
@@ -92,8 +89,7 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  labels:
-    name: websocket-$$
+  name: websocket-$$
 spec:
   replicas: 1
   template:
@@ -116,7 +112,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    name: nginx
+    metadata.name: nginx
   ports:
     - protocol: TCP
       port: 443
@@ -170,12 +166,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    name: websocket-service-$$
+  name: websocket-service-$$
 spec:
   type: NodePort
   selector:
-    name: websocket-$$
+    metadata.name: websocket-$$
   ports:
     - protocol: TCP
       port: 9000
@@ -185,12 +180,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    name: server-service-$$
+  name: server-service-$$
 spec:
   type: NodePort
   selector:
-    name: server-$$
+    metadata.name: server-$$
   ports:
     - protocol: TCP
       port: 8080
