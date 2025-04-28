@@ -181,7 +181,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app.kubernetes.io/name: websocket-service-$$
+    app.kubernetes.io/name: websocket-$$
   ports:
     - protocol: TCP
       port: 9000
@@ -194,7 +194,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app.kubernetes.io/name: server-service-$$
+    app.kubernetes.io/name: server-$$
   ports:
     - protocol: TCP
       port: 8080
