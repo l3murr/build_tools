@@ -135,7 +135,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app.kubernetes.io/name: nginx
+    app: nginx
   ports:
     - protocol: TCP
       port: 443
@@ -193,7 +193,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app.kubernetes.io/name: websocket-$$
+    app: websocket-$$
   ports:
     - protocol: TCP
       port: 9000
@@ -207,7 +207,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app.kubernetes.io/name: server-$$
+    app: server-$$
   ports:
     - protocol: TCP
       port: 8080
