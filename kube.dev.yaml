@@ -4,6 +4,9 @@ metadata:
   name: mysql-$$
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      name: mysql-$$
   template:
     metadata:
       labels:
@@ -32,6 +35,9 @@ metadata:
   name: nginx
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      name: nginx
   template:
     metadata:
       labels:
@@ -73,6 +79,9 @@ metadata:
   name: server-$$
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      name: server-$$
   template:
     metadata:
       labels:
