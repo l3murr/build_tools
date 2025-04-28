@@ -117,7 +117,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: server-service
+  name: websocket-service-$$
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: websocket-service-$$
+  ports:
+    - protocol: TCP
+      port: 9000
+      name: websocket
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-service-$$
 spec:
   type: NodePort
   selector:
