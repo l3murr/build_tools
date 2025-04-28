@@ -136,18 +136,6 @@ spec:
       port: 446
       name: app-4
     - protocol: TCP
-      port: 9003
-      name: websocket-1
-    - protocol: TCP
-      port: 9004
-      name: websocket-2
-    - protocol: TCP
-      port: 9005
-      name: websocket-3
-    - protocol: TCP
-      port: 9006
-      name: websocket-4
-    - protocol: TCP
       port: 8083
       name: coder-1
     - protocol: TCP
