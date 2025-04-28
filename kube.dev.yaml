@@ -5,6 +5,9 @@ metadata:
 spec:
   replicas: 1
   template:
+    metadata:
+      labels:
+        name: mysql-$$
     spec:
       containers:
         - image: mysql:8
@@ -30,6 +33,9 @@ metadata:
 spec:
   replicas: 1
   template:
+    metadata:
+      labels:
+        name: nginx
     spec:
       containers:
         - image: tms-nginx:v2
@@ -68,6 +74,9 @@ metadata:
 spec:
   replicas: 2
   template:
+    metadata:
+      labels:
+        name: server-$$
     spec:
       containers:
         - image: tms-server:v2
