@@ -56,8 +56,22 @@ spec:
               name: https-3
             - containerPort: 446
               name: https-4
-            - containerPort: 8080
-              name: coder
+            - containerPort: 8083
+              name: coder-1
+            - containerPort: 8084
+              name: coder-2
+            - containerPort: 8085
+              name: coder-3
+            - containerPort: 8086
+              name: coder-4
+            - containerPort: 5173
+              name: vite-1
+            - containerPort: 5174
+              name: vite-2
+            - containerPort: 5175
+              name: vite-3
+            - containerPort: 5176
+              name: vite-4
 ---
 kind: Deployment
 apiVersion: apps/v1
