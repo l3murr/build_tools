@@ -114,6 +114,9 @@ spec:
     matchLabels:
       name: websocket-$$
   template:
+    metadata:
+      labels:
+        name: websocket-$$
     spec:
       containers:
         - image: centrifugo/centrifugo:v6
