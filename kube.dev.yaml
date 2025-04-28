@@ -112,7 +112,8 @@ metadata:
 spec:
   type: NodePort
   selector:
-    metadata.name: nginx
+    metadata:
+      name: nginx
   ports:
     - protocol: TCP
       port: 443
@@ -170,7 +171,8 @@ metadata:
 spec:
   type: NodePort
   selector:
-    metadata.name: websocket-$$
+    metadata:
+      name: websocket-$$
   ports:
     - protocol: TCP
       port: 9000
@@ -184,7 +186,8 @@ metadata:
 spec:
   type: NodePort
   selector:
-    metadata.name: server-$$
+    metadata:
+      name: server-$$
   ports:
     - protocol: TCP
       port: 8080
