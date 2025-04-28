@@ -79,7 +79,7 @@ server {\n\
 }\n\
 \n\
 server {\n\
-    listen              8080 ssl;\n\
+    listen              8083 ssl;\n\
     ssl_certificate     /etc/ssl/certs/wai.crt;\n\
     ssl_certificate_key /etc/ssl/private/wai.key;\n\
     ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;\n\
