@@ -112,7 +112,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: websocket-$$
+      name: websocket-$$
   template:
     spec:
       containers:
