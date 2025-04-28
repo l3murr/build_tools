@@ -110,6 +110,9 @@ metadata:
   name: websocket-$$
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: websocket-$$
   template:
     spec:
       containers:
