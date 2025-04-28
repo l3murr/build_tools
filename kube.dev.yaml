@@ -117,26 +117,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: external
-spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Local
-  selector:
-    app.kubernetes.io/name: nginx
-  ports:
-    - port: 8080
-      targetPort: 8080
-      name: coder
-    - port: 5173
-      targetPort: 5173
-      name: vite
-    - port: 443
-      targetPort: 443
-      name: app
----
-apiVersion: v1
-kind: Service
-metadata:
   name: server-service
 spec:
   type: NodePort
