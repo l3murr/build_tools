@@ -28,6 +28,8 @@ spec:
         - name: mysql-persistent-storage
           hostPath:
             path: /data/code_$$
+      securityContext:
+        allowPrivilegeEscalation: true
 ---
 kind: Deployment
 apiVersion: apps/v1
