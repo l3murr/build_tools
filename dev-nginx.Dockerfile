@@ -90,7 +90,7 @@ server {\n\
         proxy_http_version 1.1;\n\
         proxy_set_header Upgrade $http_upgrade;\n\
         proxy_set_header Connection "upgrade";\n\
-        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-Host $http_host;\n\
         proxy_pass http://server-service-1.default.svc.cluster.local:8080;\n\
         proxy_set_header Host $host;\n\
     }\n\
