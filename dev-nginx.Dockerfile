@@ -30,7 +30,7 @@ server {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
         proxy_http_version 1.1;\n\
         proxy_set_header Upgrade $http_upgrade;\n\
-        proxy_set_header Connection "upgrade";\n\
+        proxy_set_header Connection "upgrade" $connection_upgrade;\n\
         proxy_set_header Host $host;\n\
         proxy_pass http://websocket-service-1.default.svc.cluster.local:9000/connection/websocket;\n\
     }\n\
@@ -77,7 +77,7 @@ server {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
         proxy_http_version 1.1;\n\
         proxy_set_header Upgrade $http_upgrade;\n\
-        proxy_set_header Connection "upgrade";\n\
+        proxy_set_header Connection "upgrade" $connection_upgrade;\n\
         proxy_pass http://server-service-1.default.svc.cluster.local:5173;\n\
         proxy_set_header Host $host;\n\
     }\n\
@@ -94,7 +94,7 @@ server {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
         proxy_http_version 1.1;\n\
         proxy_set_header Upgrade $http_upgrade;\n\
-        proxy_set_header Connection "upgrade";\n\
+        proxy_set_header Connection "upgrade" $connection_upgrade;\n\
         proxy_pass http://server-service-1.default.svc.cluster.local:8080;\n\
         proxy_set_header Host $host;\n\
     }\n\
