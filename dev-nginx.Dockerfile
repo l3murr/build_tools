@@ -10,13 +10,7 @@ RUN openssl x509 --passin pass:timeless -req -in /etc/ssl/certs/wai.req -CA /etc
 RUN cat /etc/ssl/private/wai.key > /etc/ssl/certs/wai-chain.crt
 RUN cat /etc/ssl/certs/wai.crt >> /etc/ssl/certs/wai-chain.crt
 RUN cat /etc/ssl/certs/wai-ca.crt >> /etc/ssl/certs/wai-chain.crt
-RUN echo 'http {\n\
-map $http_upgrade $connection_upgrade {\n\
-    default upgrade;\n\
-    ''      close;\n\
-}\n\
-\n\
-server {\n\
+RUN echo 'server {\n\
     listen              443 ssl;\n\
     ssl_certificate     /etc/ssl/certs/wai.crt;\n\
     ssl_certificate_key /etc/ssl/private/wai.key;\n\
@@ -31,7 +25,7 @@ server {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
         proxy_http_version 1.1;\n\
         proxy_set_header Upgrade $http_upgrade;\n\
-        proxy_set_header Connection $connection_upgrade;\n\
+        proxy_set_header Connection "upgrade";\n\
         proxy_set_header Host $host;\n\
         proxy_pass http://websocket-service-1.default.svc.cluster.local:9000/connection/websocket;\n\
     }\n\
@@ -78,7 +72,7 @@ server {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
         proxy_http_version 1.1;\n\
         proxy_set_header Upgrade $http_upgrade;\n\
-        proxy_set_header Connection $connection_upgrade;\n\
+        proxy_set_header Connection "upgrade";\n\
         proxy_pass http://server-service-1.default.svc.cluster.local:5173;\n\
         proxy_set_header Host $host;\n\
     }\n\
@@ -95,10 +89,9 @@ server {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
         proxy_http_version 1.1;\n\
         proxy_set_header Upgrade $http_upgrade;\n\
-        proxy_set_header Connection $connection_upgrade;\n\
+        proxy_set_header Connection "upgrade";\n\
         proxy_pass http://server-service-1.default.svc.cluster.local:8080;\n\
         proxy_set_header Host $host;\n\
     }\n\
-}\n\
 }\n\
 ' >> /etc/nginx/conf.d/default.conf
