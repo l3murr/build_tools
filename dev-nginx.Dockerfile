@@ -10,7 +10,12 @@ RUN openssl x509 --passin pass:timeless -req -in /etc/ssl/certs/wai.req -CA /etc
 RUN cat /etc/ssl/private/wai.key > /etc/ssl/certs/wai-chain.crt
 RUN cat /etc/ssl/certs/wai.crt >> /etc/ssl/certs/wai-chain.crt
 RUN cat /etc/ssl/certs/wai-ca.crt >> /etc/ssl/certs/wai-chain.crt
-RUN echo 'server {\n\
+RUN echo 'map $http_upgrade $connection_upgrade {\n\
+    default upgrade;\n\
+    ''      close;\n\
+}\n\
+\n\
+server {\n\
     listen              443 ssl;\n\
     ssl_certificate     /etc/ssl/certs/wai.crt;\n\
     ssl_certificate_key /etc/ssl/private/wai.key;\n\
