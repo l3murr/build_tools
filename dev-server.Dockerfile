@@ -35,6 +35,21 @@ mkdir /var/run/php\n\
 rr serve -c /var/www/html/server/.rr.yaml\n\
 bash'\
 >> /root/docker-entrypoint.sh
+RUN echo '[Unit]\n\
+Description=VSCode in da browser\n\
+After=network.target\n\
+\n\
+[Service]\n\
+User=1000\n\
+Group=1000\n\
+\n\
+WorkingDirectory=/var/www/html\n\
+ExecStart=code-server --no-auth none --host 0.0.0.0\n\
+\n\
+[Install]\n\
+WantedBy=multi-user.target\n\
+' >> /etc/systemd/system/coder-web.service
+RUN systemctl enable coder-web.service
 RUN dos2unix /root/docker-entrypoint.sh
 RUN chmod +x /root/docker-entrypoint.sh
 
