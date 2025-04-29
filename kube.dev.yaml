@@ -24,8 +24,6 @@ spec:
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/www/html
-          securityContext:
-            privileged: true
       volumes:
         - name: mysql-persistent-storage
           hostPath:
@@ -103,6 +101,8 @@ spec:
           volumeMounts:
             - name: server-persistent-storage
               mountPath: /var/www/html
+          securityContext:
+            privileged: true
       volumes:
         - name: server-persistent-storage
           hostPath:
