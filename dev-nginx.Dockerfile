@@ -10,7 +10,8 @@ RUN openssl x509 --passin pass:timeless -req -in /etc/ssl/certs/wai.req -CA /etc
 RUN cat /etc/ssl/private/wai.key > /etc/ssl/certs/wai-chain.crt
 RUN cat /etc/ssl/certs/wai.crt >> /etc/ssl/certs/wai-chain.crt
 RUN cat /etc/ssl/certs/wai-ca.crt >> /etc/ssl/certs/wai-chain.crt
-RUN echo 'map $http_upgrade $connection_upgrade {\n\
+RUN echo 'http {\n\
+map $http_upgrade $connection_upgrade {\n\
     default upgrade;\n\
     ''      close;\n\
 }\n\
@@ -98,5 +99,6 @@ server {\n\
         proxy_pass http://server-service-1.default.svc.cluster.local:8080;\n\
         proxy_set_header Host $host;\n\
     }\n\
+}\n\
 }\n\
 ' >> /etc/nginx/conf.d/default.conf
