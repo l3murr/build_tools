@@ -41,12 +41,12 @@ fi\n\
 /usr/bin/supervisord\n\
 bash'\
 >> /root/docker-entrypoint.sh
-RUN echo '#!/bin/sh\n\
+RUN echo '[program:code-server]\n\
 command=code-server --auth none --host 0.0.0.0\n\
 autostart=true\n\
 autorestart=true'\
 >> /etc/supervisor/conf.d/code-server.conf
-RUN echo '#!/bin/sh\n\
+RUN echo '[program:rr]\n\
 command=rr serve -c /var/www/html/server/.rr.yaml\n\
 autostart=true\n\
 autorestart=true'\
