@@ -27,7 +27,7 @@ if [ -f /var/www/html/README.md ]; then\n\
     chown -R www-data:www-data /var/www/html/backend/storage/\n\
 else\n\
   rm -rf /var/www/html/*\n\
-  echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config\n\
+  git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'\n\
   git clone git@github.com:Timeless-Medical-International/tmnp.git /var/www/html\n\
   cd /var/www/html/backend\n\
   npm run ext\n\
