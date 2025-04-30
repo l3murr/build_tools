@@ -63,4 +63,4 @@ RUN chmod +x /root/docker-entrypoint.sh
 WORKDIR /var/www/html
 
 ENTRYPOINT ["tail"]
-CMD ["-f","/dev/null"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
