@@ -26,7 +26,7 @@ if [ -f /var/www/html/README.md ]; then\n\
     echo "chowning /var/www/html/backend/storage/ for www-data"\n\
     chown -R www-data:www-data /var/www/html/backend/storage/\n\
 else\n\
-  rm -rf /var/www/html\n\
+  rm -rf /var/www/html/*\n\
   git clone git@github.com:Timeless-Medical-International/tmnp.git /var/www/html\n\
   cd /var/www/html/backend\n\
   npm run ext\n\
