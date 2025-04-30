@@ -45,6 +45,7 @@ else\n\
   npm i\n\
   npm run dev\n\
 fi\n\
+/usr/bin/supervisord", "-c", "/etc/supervisord.conf\n\
 bash'\
 >> /root/docker-entrypoint.sh
 RUN echo '#!/bin/sh\n\
@@ -61,6 +62,4 @@ RUN dos2unix /root/docker-entrypoint.sh
 RUN chmod +x /root/docker-entrypoint.sh
 
 WORKDIR /var/www/html
-
-ENTRYPOINT ["tail"]
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT "/root/docker-entrypoint.sh"
