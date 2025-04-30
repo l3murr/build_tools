@@ -46,7 +46,7 @@ autostart=true\n\
 autorestart=true'\
 >> /etc/supervisor/conf.d/code-server.conf
 RUN echo '[program:rr]\n\
-command=rr serve -c /var/www/html/server/.rr.yaml\n\
+command=rr serve -c /var/www/html/backend/.rr.yaml\n\
 autostart=true\n\
 autorestart=true'\
 >> /etc/supervisor/conf.d/rr.conf
