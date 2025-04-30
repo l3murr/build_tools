@@ -20,12 +20,12 @@ RUN mkdir -p /etc/apt/keyrings && \
     ~/.cargo/bin/rustup install nightly-2024-05-20 && \
     curl -fsSL https://code-server.dev/install.sh | sh
 RUN echo '#!/bin/sh\n\
+cd /var/www/html\n\
 mkdir /var/run/php\n\
 if [ -f /var/www/html/README.md ]; then\n\
     echo "chowning /var/www/html/backend/storage/ for www-data"\n\
     chown -R www-data:www-data /var/www/html/backend/storage/\n\
 else\n\
-  cd /var/www/html\n\
   git clone git@github.com:Timeless-Medical-International/tmnp.git .\n\
   cd /var/www/html/backend\n\
   npm run ext\n\
