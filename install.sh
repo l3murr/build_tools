@@ -1,0 +1,54 @@
+#!/bin/sh
+set -eu
+
+check_minikube_install() {
+    if [[ $(minikube 2>/dev/null)  =~ "minikube provisions and manages local Kubernetes" ]]; then
+        return;
+    fi
+    echo "You must have minikube installed first"
+    exit 0
+}
+
+check_minikube_running() {
+    if [[ $(minikube status 2>/dev/null)  =~ "host: Running" ]]; then
+        return;
+    fi
+    minikube start --listen-address=0.0.0.0 --ports=30080:80,30443:443
+}
+
+main() {
+    if [[ $# -gt 0 ]]; then
+        profile=$1
+    else
+        profile="1"
+    fi
+        if [[ $# -gt 1 ]]; then
+        host=$2
+        san="IP:$2"
+    else
+        host="localhost"
+        san="DNS:localhost"
+    fi
+    check_minikube_install
+    check_minikube_running
+    minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-nginx.Dockerfile | docker build --build-arg SAN=$san --build-arg APP_URL=$host -t tms-nginx:v2 -"
+    minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-server.Dockerfile | docker build -t tms-server:v2 -"
+    curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/kube.dev.yaml | sed "s/\\$\\$/$profile/g" | minikube kubectl apply -- -f -
+    
+    #pods=($(minikube kubectl get pods | grep -o 'server-1-[0-9a-z-]*' | tr '\n' ' '))
+    keys=($(ls ~/.ssh))
+    for i in "${keys[@]}"; do
+        minikube cp "$HOME/.ssh/$i" "minikube:/data/ssh/$i"
+    done
+    nginx=$(minikube kubectl get pods | grep -o 'nginx-[0-9a-z-]*')
+    if [[ $profile == "1" ]]; then
+        minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 8083:8083 & \
+        minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 5173:5173 & \
+        minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 8443:443 & \
+        echo "Press CTRL-C to stop port forwarding and exit the script"
+        wait
+        return
+    fi
+}
+
+main "$@"
