@@ -36,7 +36,7 @@ else\n\
   npm i\n\
   npm run dev\n\
 fi\n\
-/usr/bin/supervisord", "-c", "/etc/supervisord.conf\n\
+/usr/bin/supervisord\n\
 bash'\
 >> /root/docker-entrypoint.sh
 RUN echo '#!/bin/sh\n\
