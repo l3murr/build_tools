@@ -45,9 +45,18 @@ else\n\
   npm i\n\
   npm run dev\n\
 fi\n\
-code-server --auth none --host 0.0.0.0 & rr serve -c /var/www/html/server/.rr.yaml\n\
 bash'\
 >> /root/docker-entrypoint.sh
+RUN echo '#!/bin/sh\n\
+command=code-server --auth none --host 0.0.0.0\n\
+autostart=true\n\
+autorestart=true'\
+>> /etc/supervisor/conf.d/code-server.conf
+RUN echo '#!/bin/sh\n\
+command=rr serve -c /var/www/html/server/.rr.yaml\n\
+autostart=true\n\
+autorestart=true'\
+>> /etc/supervisor/conf.d/rr.conf
 RUN dos2unix /root/docker-entrypoint.sh
 RUN chmod +x /root/docker-entrypoint.sh
 
