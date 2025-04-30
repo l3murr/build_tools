@@ -24,15 +24,10 @@ spec:
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/www/html
-            - name: ssh
-              mountPath: /root/.ssh
       volumes:
         - name: mysql-persistent-storage
           hostPath:
             path: /data/code_$$
-        - name: ssh
-          hostPath:
-            path: /data/ssh
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -106,12 +101,17 @@ spec:
           volumeMounts:
             - name: server-persistent-storage
               mountPath: /var/www/html
+            - name: ssh
+              mountPath: /root/.ssh
           securityContext:
             privileged: true
       volumes:
         - name: server-persistent-storage
           hostPath:
             path: /data/code_$$
+        - name: ssh
+          hostPath:
+            path: /data/ssh
 ---
 kind: Deployment
 apiVersion: apps/v1
