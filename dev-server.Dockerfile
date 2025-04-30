@@ -38,7 +38,7 @@ if [ -f /var/www/html/README.md ]; then\n\
   #npm i\n\
   #npm run dev\n\
 fi\n\
-/usr/bin/supervisord & bash'\
+/usr/bin/supervisord & tail -f /dev/null'\
 >> /root/docker-entrypoint.sh
 RUN echo '[program:code-server]\n\
 command=code-server --auth none --host 0.0.0.0\n\
