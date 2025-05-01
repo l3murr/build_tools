@@ -123,7 +123,7 @@ spec:
             - name: SHARED_ENCRYPTION_KEY
               value: "SUPER_SECRET_KEY_SHHH"
             - name: XDEBUG_SESSION
-              value: 1
+              value: "1"
           ports:
             - containerPort: 80
               name: http
