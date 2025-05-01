@@ -185,6 +185,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: mysql-service-$$
+spec:
+  selector:
+    name: mysql-$$
+  ports:
+    - protocol: TCP
+      port: 3306
+      name: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: server-service-$$
 spec:
   selector:
