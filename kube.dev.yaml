@@ -107,15 +107,15 @@ spec:
             - name: DB_PASSWORD
               value: "password"
             - name: DB_DATABASE
-              value: "platform"
+              value: "c45d86012a4e470091d7e186397a55a0"
             - name: DB_HOST
               value: "mysql-service-$$.default.svc.cluster.local"
             - name: DB_PORT
               value: "3306"
             - name: DB_WH_HOST
-              value: ""
+              value: "mysql-service-$$.default.svc.cluster.local"
             - name: DB_WH_PORT
-              value: ""
+              value: "3306"
             - name: SANCTUM_STATEFUL_DOMAINS
               value: "https://^^.8443"
             - name: SESSION_DOMAIN
