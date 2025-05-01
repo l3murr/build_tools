@@ -33,7 +33,7 @@ main() {
     check_minikube_running
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-nginx.Dockerfile | docker build --build-arg SAN=$san --build-arg APP_URL=$host -t tms-nginx:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-server.Dockerfile | docker build -t tms-server:v2 -"
-    curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/kube.dev.yaml | sed "s/\\$\\$/$profile/g" | sed "s/\\^\\^/$host/g" || minikube kubectl apply -- -f -
+    curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/kube.dev.yaml | sed "s/\\$\\$/$profile/g" | sed "s/\\^\\^/$host/g" | minikube kubectl apply -- -f -
     
     #pods=($(minikube kubectl get pods | grep -o 'server-1-[0-9a-z-]*' | tr '\n' ' '))
     keys=($(ls ~/.ssh))
