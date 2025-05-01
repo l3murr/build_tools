@@ -109,7 +109,7 @@ spec:
             - name: DB_DATABASE
               value: "platform"
             - name: DB_HOST
-              value: "http://mysql-service-$$.default.svc.cluster.local"
+              value: "mysql-service-$$.default.svc.cluster.local"
             - name: DB_PORT
               value: "3306"
             - name: DB_WH_HOST
