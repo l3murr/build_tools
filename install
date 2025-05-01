@@ -41,7 +41,7 @@ main() {
         minikube cp "$HOME/.ssh/$i" "minikube:/data/ssh/$i"
     done
     nginx=$(minikube kubectl get pods | grep -o 'nginx-[0-9a-z-]*')
-    mysql=$(minikube kubectl get pods | grep -o 'mysql-$$-[0-9a-z-]*')
+    mysql=$(minikube kubectl get pods | grep -o "mysql-profile-[0-9a-z-]*")
     if [[ $profile == "1" ]]; then
         minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 8083:8083 & \
         minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 5173:5173 & \
