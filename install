@@ -42,7 +42,7 @@ main() {
     for i in "${keys[@]}"; do
         minikube cp "$HOME/.ssh/$i" "minikube:/data/ssh/$i"
         if [[ "$i" =~ $PK_REGEX ]]; then
-          minikube ssh "chmod 400 /data/ssh/$i"
+          minikube ssh "sudo chmod 400 /data/ssh/$i"
         fi
     done
     nginx=$(minikube kubectl get pods | grep -o 'nginx-[0-9a-z-]*')
