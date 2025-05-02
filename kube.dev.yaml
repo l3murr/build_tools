@@ -129,7 +129,7 @@ spec:
               name: http
             - containerPort: 8080
               name: coder
-              - containerPort: 30000
+            - containerPort: 30000
               name: websocket
             - containerPort: 5173
               name: vite
