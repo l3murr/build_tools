@@ -74,4 +74,4 @@ RUN echo '{\n\
         "enabled": false\n\
     }\n\
 }' >> /centrifugo/config.json
-CMD ["mysqld"]
+CMD ["centrifugo"]
