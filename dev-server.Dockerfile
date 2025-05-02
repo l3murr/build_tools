@@ -18,7 +18,7 @@ RUN mkdir -p /etc/apt/keyrings && \
     curl -OL https://raw.githubusercontent.com/l3murr/build_tools/main/cargo-php && chmod +x /cargo-php && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     ~/.cargo/bin/rustup install nightly-2024-05-20 && \
-    cargo -g wasm-pack && \
+    /root/.cargo/bin/cargo -g wasm-pack && \
     curl -fsSL https://code-server.dev/install.sh | sh
 RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
