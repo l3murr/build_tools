@@ -24,9 +24,9 @@ RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
 mkdir /var/run/php\n\
 if [ -f /var/www/html/README.md ]; then\n\
-    echo "chowning /var/www/html/backend/storage/ for www-data"\n\
-    chown -R www-data:www-data /var/www/html/backend/storage/\n\
-#else\n\
+  echo "chowning /var/www/html/backend/storage/ for www-data"\n\
+  chown -R www-data:www-data /var/www/html/backend/storage/\n\
+else\n\
   rm -rf /var/www/html/*\n\
   GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:Timeless-Medical-International/tmnp.git /var/www/html\n\
   cd /var/www/html/backend\n\
