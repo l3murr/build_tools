@@ -73,5 +73,5 @@ RUN echo '{\n\
     "admin": {\n\
         "enabled": false\n\
     }\n\
-}' >> /centrifugo/config.json
+}\n' >> /centrifugo/config.json
 CMD ["centrifugo"]
