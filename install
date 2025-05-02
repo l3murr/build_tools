@@ -40,6 +40,10 @@ main() {
     keys=($(ls ~/.ssh))
     for i in "${keys[@]}"; do
         minikube cp "$HOME/.ssh/$i" "minikube:/data/ssh/$i"
+        if [[ "$i" =~ ^id_[]$ ]]; then
+          echo "yay!"
+          echo "$i"
+        fi
     done
     nginx=$(minikube kubectl get pods | grep -o 'nginx-[0-9a-z-]*')
     mysql=$(minikube kubectl get pods | grep -o "mysql-$profile-[0-9a-z-]*")
