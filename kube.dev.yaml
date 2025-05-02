@@ -129,6 +129,8 @@ spec:
               name: http
             - containerPort: 8080
               name: coder
+              - containerPort: 30000
+              name: websocket
             - containerPort: 5173
               name: vite
           volumeMounts:
@@ -208,6 +210,9 @@ spec:
     - protocol: TCP
       port: 80
       name: app
+    - protocol: TCP
+      port: 30000
+      name: websocket
     - protocol: TCP
       port: 5173
       name: vite
