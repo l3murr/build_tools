@@ -40,7 +40,7 @@ main() {
     keys=($(ls ~/.ssh))
     for i in "${keys[@]}"; do
         minikube cp "$HOME/.ssh/$i" "minikube:/data/ssh/$i"
-        if [[ "$i" =~ ^id_[]$ ]]; then
+        if [[ "$i" =~ ^id_[a-zA-Z0-9]$ ]]; then
           echo "yay!"
           echo "$i"
         fi
