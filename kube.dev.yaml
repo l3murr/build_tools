@@ -163,7 +163,7 @@ spec:
         name: websocket-$$
     spec:
       containers:
-        - image: centrifugo/centrifugo:v6
+        - image: tms-websocket:v2
           name: websocket-$$
           env:
             - name: MYSQL_ROOT_PASSWORD
