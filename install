@@ -13,7 +13,7 @@ check_minikube_running() {
     if [[ $(minikube status 2>/dev/null)  =~ "host: Running" ]]; then
         return;
     fi
-    minikube start --listen-address=0.0.0.0 --ports=30080:80,30443:443
+    minikube start --listen-address=0.0.0.0
 }
 
 main() {
@@ -41,9 +41,9 @@ main() {
     keys=($(ls ~/.ssh))
     PK_REGEX='^id_[a-zA-Z0-9]*$'
     for i in "${keys[@]}"; do
-        minikube cp "$HOME/.ssh/$i" "minikube:/data/ssh/$i"
+        minikube cp "$HOME/.ssh/$i" "minikube:/data/home/.ssh/$i"
         if [[ "$i" =~ $PK_REGEX ]]; then
-          minikube ssh "sudo chmod 400 /data/ssh/$i"
+          minikube ssh "sudo chmod 400 /data/home/.ssh/$i"
         fi
     done
     nginx=$(minikube kubectl get pods | grep -o 'nginx-[0-9a-z-]*')
