@@ -25,7 +25,7 @@ RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
 mkdir /var/run/php\n\
 if [ -f /root/.bashrc ]; then\n\
-then\n\
+else\n\
     echo ". /git-completion.bash" > /root/.bashrc\n\
 fi\n\
 if [ -f /var/www/html/README.md ]; then\n\
