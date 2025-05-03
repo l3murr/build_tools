@@ -51,8 +51,8 @@ command=rr serve -c /var/www/html/backend/.rr.yaml\n\
 autostart=true\n\
 autorestart=true'\
 >> /etc/supervisor/conf.d/rr.conf
-RUN dos2unix /root/docker-entrypoint.sh
-RUN chmod +x /root/docker-entrypoint.sh
+RUN dos2unix /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR /var/www/html
-ENTRYPOINT "/root/docker-entrypoint.sh"
+ENTRYPOINT "/docker-entrypoint.sh"
