@@ -24,8 +24,7 @@ RUN mkdir -p /etc/apt/keyrings && \
 RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
 mkdir /var/run/php\n\
-if [ -f /root/.bashrc ]; then\n\
-else\n\
+if [ ! -f /root/.bashrc ]; then\n\
     echo ". /git-completion.bash" > /root/.bashrc\n\
 fi\n\
 if [ -f /var/www/html/README.md ]; then\n\
