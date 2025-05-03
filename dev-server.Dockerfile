@@ -24,6 +24,10 @@ RUN mkdir -p /etc/apt/keyrings && \
 RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
 mkdir /var/run/php\n\
+if [ -f /root/.bashrc ]; then\n\
+then\n\
+    echo ". /git-completion.bash" > /root/.bashrc\n\
+fi\n\
 if [ -f /var/www/html/README.md ]; then\n\
   echo "chowning /var/www/html/backend/storage/ for www-data"\n\
   chown -R www-data:www-data /var/www/html/backend/storage/\n\
