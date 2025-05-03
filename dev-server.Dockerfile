@@ -19,6 +19,7 @@ RUN mkdir -p /etc/apt/keyrings && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     ~/.cargo/bin/rustup install nightly-2024-05-20 && \
     ~/.cargo/bin/cargo install wasm-pack && \
+    curl -o /git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     curl -fsSL https://code-server.dev/install.sh | sh
 RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
