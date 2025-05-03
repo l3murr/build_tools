@@ -137,7 +137,7 @@ spec:
             - name: server-persistent-storage
               mountPath: /var/www/html
             - name: ssh
-              mountPath: /root/.ssh
+              mountPath: /root
           securityContext:
             privileged: true
       volumes:
@@ -146,7 +146,7 @@ spec:
             path: /data/code_$$
         - name: ssh
           hostPath:
-            path: /data/ssh
+            path: /data/home
 ---
 kind: Deployment
 apiVersion: apps/v1
