@@ -12,25 +12,24 @@ RUN mkdir -p /etc/apt/keyrings && \
     git unzip php8.3-xml php8.3-dev libapache2-mod-php8.3 php8.3-curl net-tools dos2unix \               
     php8.3-zip php8.3-xdebug php8.3-soap php8.3-protobuf locales supervisor clang mysql-client libz-dev cmake && \
     apt-get clean && \
-    curl https://sh.rustup.rs -sSf | bash -s -- -y && \
     curl -s -L https://go.dev/dl/go1.24.0.linux-amd64.tar.gz | tar -C /usr/local -xzf - && \
-    echo 'export PATH="/usr/local/go/bin:$PATH"' >> /root/.bashrc && \
     curl -OL https://raw.githubusercontent.com/l3murr/build_tools/main/cargo-php && chmod +x /cargo-php && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    ~/.cargo/bin/rustup install nightly-2024-05-20 && \
-    ~/.cargo/bin/cargo install wasm-pack && \
     curl -o /git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
     curl -fsSL https://code-server.dev/install.sh | sh
 RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
 mkdir /var/run/php\n\
 if [ ! -f /root/.bashrc ]; then\n\
-    echo ". /git-completion.bash" > /root/.bashrc\n\
+    echo ". /git-completion.bash\n'export PATH="/usr/local/go/bin:$PATH" > /root/.bashrc\n\
 fi\n\
 if [ -f /var/www/html/README.md ]; then\n\
   echo "chowning /var/www/html/backend/storage/ for www-data"\n\
   chown -R www-data:www-data /var/www/html/backend/storage/\n\
 else\n\
+  curl https://sh.rustup.rs -sSf | bash -s -- -y\n\
+  root/.cargo/bin/rustup install nightly-2024-05-20\n\
+  root/.cargo/bin/cargo install wasm-pack\n\
   rm -rf /var/www/html/*\n\
   GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:Timeless-Medical-International/tmnp.git /var/www/html\n\
   cd /var/www/html/backend\n\
