@@ -11,7 +11,7 @@ RUN cat /etc/ssl/private/wai.key > /etc/ssl/certs/wai-chain.crt
 RUN cat /etc/ssl/certs/wai.crt >> /etc/ssl/certs/wai-chain.crt
 RUN cat /etc/ssl/certs/wai-ca.crt >> /etc/ssl/certs/wai-chain.crt
 RUN echo 'server {\n\
-    listen              443 ssl;\n\
+    listen              8443 ssl;\n\
     ssl_certificate     /etc/ssl/certs/wai.crt;\n\
     ssl_certificate_key /etc/ssl/private/wai.key;\n\
     ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;\n\
