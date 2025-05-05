@@ -48,13 +48,13 @@ spec:
           imagePullPolicy: Never
           name: nginx
           ports:
-            - containerPort: 443
+            - containerPort: 8443
               name: https-1
-            - containerPort: 444
+            - containerPort: 8444
               name: https-2
-            - containerPort: 445
+            - containerPort: 8445
               name: https-3
-            - containerPort: 446
+            - containerPort: 8446
               name: https-4
             - containerPort: 8083
               name: coder-1
