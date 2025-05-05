@@ -17,6 +17,27 @@ RUN mkdir -p /etc/apt/keyrings && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     curl -o /git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
     curl -fsSL https://code-server.dev/install.sh | sh
+RUN echo '[PHP]\n\
+log_errors = on\n\
+short_open_tag = on\n\
+display_errors = on\n\
+display_startup_errors = on\n\
+error_reporting = E_ALL ^ E_NOTICE ^ E_WARNING\n\
+error_log = /var/log/apache2/php-error.log\n\
+precision = 10\n\
+serialize_precision = 10\n\
+memory_limit = 256M\n\
+
+xdebug.extension=xdebug.so\n\
+xdebug.start_with_request=1\n\
+xdebug.discover_client_host=1\n\
+xdebug.remote_cookie_expire_time = 3600\n\
+xdebug.client_host=host.docker.internal\n\
+xdebug.client_port = 9999\n\
+xdebug.remote_handler = dbgp\n\
+xdebug.mode = debug,develop\n\
+xdebug.idekey="PHPSTORM"\n\
+extension=/var/www/html/backend/ext/libtms_platform_extension.so' >> /etc/php/8.3/cli/php.ini
 RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
 mkdir /var/run/php\n\
