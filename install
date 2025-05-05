@@ -63,7 +63,7 @@ main() {
     if [[ $profile == "1" ]]; then
         minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 8083:8083 & \
         minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 5173:5173 & \
-        minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 8443:443 & \
+        minikube kubectl -- port-forward --address 0.0.0.0 "$nginx" 8443:8443 & \
         minikube kubectl -- port-forward --address 0.0.0.0 "$mysql" 3306:3306 & \
         echo "Press CTRL-C to stop port forwarding and exit the script"
         wait
