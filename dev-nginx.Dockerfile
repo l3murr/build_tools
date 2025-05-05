@@ -56,7 +56,7 @@ RUN echo 'server {\n\
         \n\
     location / {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
-        proxy_set_header X-Forwarded-Port $http_x_forwarded_port;\n\
+        proxy_set_header X-Forwarded-Port $x_forwarded_port;\n\
         proxy_pass http://server-service-1.default.svc.cluster.local;\n\
         proxy_set_header Host $host;\n\
     }\n\
