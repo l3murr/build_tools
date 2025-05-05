@@ -29,13 +29,25 @@ main() {
         host="localhost"
         san="DNS:localhost"
     fi
+    if [[ $profile == "1" ]]; then
+      app_port=8443
+    fi
+    if [[ $profile == "2" ]]; then
+      app_port=8844
+    fi
+    if [[ $profile == "3" ]]; then
+      app_port=8845
+    fi
+    if [[ $profile == "4" ]]; then
+      app_port=8846
+    fi
     check_minikube_install
     check_minikube_running
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-nginx.Dockerfile | docker build --build-arg SAN=$san --build-arg APP_URL=$host -t tms-nginx:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-server.Dockerfile | docker build -t tms-server:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-mysql.Dockerfile | docker build -t tms-mysql:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-websocket.Dockerfile | docker build -t tms-websocket:v2 -"
-    curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/kube.dev.yaml | sed "s/\\$\\$/$profile/g" | sed "s/\\^\\^/$host/g" | minikube kubectl apply -- -f -
+    curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/kube.dev.yaml | sed "s/\\$\\$/$profile/g" | sed "s/\\^\\^/$host/g" | sed "s/\\*\\*/$app_port/g" | minikube kubectl apply -- -f -
     
     #pods=($(minikube kubectl get pods | grep -o 'server-1-[0-9a-z-]*' | tr '\n' ' '))
     keys=($(ls ~/.ssh))
