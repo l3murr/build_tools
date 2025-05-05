@@ -97,7 +97,7 @@ spec:
             - name: APP_KEY
               value: "base64:tmngqCZPOfxduklCUye1co12Vb9Ep9qVOV1oPEhyj8c="
             - name: APP_URL
-              value: "https://^^"
+              value: "https://^^:**"
             - name: APP_BASE_PATH
               value: "/var/www/html/backend"
             - name: LARAVEL_OCTANE
@@ -117,7 +117,7 @@ spec:
             - name: DB_WH_PORT
               value: "3306"
             - name: SANCTUM_STATEFUL_DOMAINS
-              value: "https://^^.8443"
+              value: "https://^^:**"
             - name: SESSION_DOMAIN
               value: "^^"
             - name: SHARED_ENCRYPTION_KEY
