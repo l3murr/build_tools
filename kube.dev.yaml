@@ -165,11 +165,8 @@ spec:
       containers:
         - image: tms-websocket:v2
           name: websocket-$$
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: password
           ports:
-            - containerPort: 9000
+            - containerPort: 8000
               name: websocket
 ---
 apiVersion: v1
@@ -181,7 +178,7 @@ spec:
     name: websocket-$$
   ports:
     - protocol: TCP
-      port: 9000
+      port: 8000
       name: websocket
 ---
 apiVersion: v1
