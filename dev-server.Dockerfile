@@ -16,7 +16,7 @@ RUN mkdir -p /etc/apt/keyrings && \
     curl -OL https://raw.githubusercontent.com/l3murr/build_tools/main/cargo-php && chmod +x /cargo-php && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     curl -o /git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
-    curl -fsSL https://aka.ms/install-vscode-server/setup.sh | sh
+    curl -fsSL https://code-server.dev/install.sh | sh
 RUN echo '[PHP]\n\
 log_errors = on\n\
 short_open_tag = on\n\
