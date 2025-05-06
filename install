@@ -49,7 +49,6 @@ main() {
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-websocket.Dockerfile | docker build -t tms-websocket:v2 -"
     curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/kube.dev.yaml | sed "s/\\$\\$/$profile/g" | sed "s/\\^\\^/$host/g" | sed "s/\\*\\*/$app_port/g" | minikube kubectl apply -- -f -
     
-    #pods=($(minikube kubectl get pods | grep -o 'server-1-[0-9a-z-]*' | tr '\n' ' '))
     keys=($(ls ~/.ssh))
     SSH_REGEX='^id_[a-zA-Z0-9]*'
     PK_REGEX='^id_[a-zA-Z0-9]*$'
