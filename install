@@ -51,9 +51,12 @@ main() {
     
     #pods=($(minikube kubectl get pods | grep -o 'server-1-[0-9a-z-]*' | tr '\n' ' '))
     keys=($(ls ~/.ssh))
+    SSH_REGEX='^id_[a-zA-Z0-9]*'
     PK_REGEX='^id_[a-zA-Z0-9]*$'
     for i in "${keys[@]}"; do
-        minikube cp "$HOME/.ssh/$i" "minikube:/data/home/.ssh/$i"
+        if [[ "$i" =~ $SSH_REGEX ]]; then
+          minikube cp "$HOME/.ssh/$i" "minikube:/data/home/.ssh/$i"
+        fi
         if [[ "$i" =~ $PK_REGEX ]]; then
           minikube ssh "sudo chmod 400 /data/home/.ssh/$i"
         fi
