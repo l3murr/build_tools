@@ -49,8 +49,8 @@ if [ -f /var/www/html/README.md ]; then\n\
   chown -R www-data:www-data /var/www/html/backend/storage/\n\
 else\n\
   curl https://sh.rustup.rs -sSf | bash -s -- -y\n\
-  root/.cargo/bin/rustup install nightly-2024-05-20\n\
-  root/.cargo/bin/cargo install wasm-pack\n\
+  /root/.cargo/bin/rustup install nightly-2024-05-20\n\
+  /root/.cargo/bin/cargo install wasm-pack\n\
   rm -rf /var/www/html/*\n\
   GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:Timeless-Medical-International/tmnp.git /var/www/html\n\
   cd /var/www/html/backend\n\
