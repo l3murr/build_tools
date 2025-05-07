@@ -50,7 +50,7 @@ tkLtD1UEjYtl9/AzkGgSx43HIXEhTTuQGWddpfyvhhXQBzGburI8TGos7uGyKlkp\n\
 PBmNqvlUr3QDuamTX+Bts3e9oosegdJvJGOvwIDTF47KeY2mVkAhl/JBUadU2gPp\n\
 FGAqjKxqsprY30XWkPctOeXdQCGmNKTff9EyoVYcr6klmQ5ByZLZBg7ZGr1tWFGO\n\
 3NEAiX5vvwrXKvj9tpT/LFOAiTlIGFVFzXgWVVjW6uSUjRBzrvAlndo=\n\
------END CERTIFICATE-----' >> /etc/ssl/private/wai.crt
+-----END CERTIFICATE-----' >> /etc/ssl/certs/wai.crt
 RUN echo 'server {\n\
     listen              8443 ssl;\n\
     ssl_certificate     /etc/ssl/certs/wai.crt;\n\
