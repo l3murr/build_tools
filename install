@@ -22,28 +22,26 @@ main() {
     else
         profile="1"
     fi
-        if [[ $# -gt 1 ]]; then
+    if [[ $# -gt 1 ]]; then
         host=$2
-        san="IP:$2"
     else
-        host="localhost"
-        san="DNS:localhost"
+        host="tmnp.net"
     fi
     if [[ $profile == "1" ]]; then
-      app_port=8443
+        app_port=8443
     fi
     if [[ $profile == "2" ]]; then
-      app_port=8844
+        app_port=8844
     fi
     if [[ $profile == "3" ]]; then
-      app_port=8845
+        app_port=8845
     fi
     if [[ $profile == "4" ]]; then
-      app_port=8846
+        app_port=8846
     fi
     check_minikube_install
     check_minikube_running
-    minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-nginx.Dockerfile | docker build --build-arg SAN=$san --build-arg APP_URL=$host -t tms-nginx:v2 -"
+    minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-nginx-nip.Dockerfile | docker build -t tms-nginx:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-server.Dockerfile | docker build -t tms-server:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-mysql.Dockerfile | docker build -t tms-mysql:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-websocket.Dockerfile | docker build -t tms-websocket:v2 -"
@@ -54,10 +52,10 @@ main() {
     PK_REGEX='^id_[a-zA-Z0-9]*$'
     for i in "${keys[@]}"; do
         if [[ "$i" =~ $SSH_REGEX ]]; then
-          minikube cp "$HOME/.ssh/$i" "minikube:/data/home/.ssh/$i"
+            minikube cp "$HOME/.ssh/$i" "minikube:/data/home/.ssh/$i"
         fi
         if [[ "$i" =~ $PK_REGEX ]]; then
-          minikube ssh "sudo chmod 400 /data/home/.ssh/$i"
+            minikube ssh "sudo chmod 400 /data/home/.ssh/$i"
         fi
     done
     nginx=$(minikube kubectl get pods | grep -o 'nginx-[0-9a-z-]*')
