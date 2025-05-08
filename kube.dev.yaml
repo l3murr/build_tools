@@ -27,7 +27,7 @@ spec:
       volumes:
         - name: mysql-persistent-storage
           hostPath:
-            path: /data/code_$$
+            path: /data/db_$$
 ---
 kind: Deployment
 apiVersion: apps/v1
