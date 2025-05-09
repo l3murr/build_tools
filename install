@@ -13,7 +13,7 @@ check_minikube_running() {
     if [[ $(minikube status 2>/dev/null)  =~ "host: Running" ]]; then
         return;
     fi
-    minikube start --listen-address=0.0.0.0
+    minikube start --listen-address=0.0.0.0 --embed-certs
 }
 
 main() {
