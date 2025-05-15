@@ -213,3 +213,16 @@ spec:
     - protocol: TCP
       port: 5173
       name: vite
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-proxy
+spec:
+  selector:
+    name: nginx
+  ports:
+    - port: 8443
+    - port: 8083
+    - port: 5173
+  type: LoadBalancer
