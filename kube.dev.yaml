@@ -192,6 +192,7 @@ spec:
     - protocol: TCP
       port: 3306
       name: mysql
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
