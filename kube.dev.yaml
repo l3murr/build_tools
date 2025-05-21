@@ -1,6 +1,42 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
+  name: cache-$$
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: cache-$$
+  template:
+    metadata:
+      labels:
+        name: cache-$$
+    spec:
+      containers:
+        - image: memcached:1.6.38
+          name: cache-$$
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+          ports:
+            - containerPort: 11211
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cache-service-$$
+spec:
+  selector:
+    name: cache-$$
+  ports:
+    - protocol: TCP
+      port: 11211
+      name: http
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
   name: mysql-$$
 spec:
   replicas: 1
