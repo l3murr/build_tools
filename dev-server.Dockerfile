@@ -6,7 +6,7 @@ RUN mkdir -p /etc/apt/keyrings && \
     NODE_MAJOR=22 && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" > /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
     apt-get install -y nodejs php8.3 php8.3-mbstring php8.3-mysqli php8.3-bcmath php8.3-gmp \
-    git unzip net-tools locales supervisor clang mysql-client libz-dev cmake apt-get clean && \
+    git unzip net-tools locales supervisor clang mysql-client libz-dev cmake && \
     curl -o /git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
     curl -fsSL https://code-server.dev/install.sh | sh
 RUN echo '#!/bin/sh\n\
