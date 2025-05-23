@@ -5,8 +5,7 @@ RUN mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     NODE_MAJOR=22 && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" > /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
-    apt-get install -y nodejs php8.3 php8.3-mbstring php8.3-mysqli php8.3-bcmath php8.3-gmp \
-    git unzip net-tools locales supervisor clang mysql-client libz-dev cmake && \
+    apt-get install -y nodejs git unzip net-tools locales supervisor clang mysql-client libz-dev cmake && \
     curl -o /git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
     curl -fsSL https://code-server.dev/install.sh | sh
 RUN echo '#!/bin/sh\n\
@@ -20,6 +19,7 @@ if [ -f /var/www/html/README.md ]; then\n\
 else\n\
   curl https://sh.rustup.rs -sSf | bash -s -- -y\n\
   /root/.cargo/bin/rustup install nightly-2024-05-20\n\
+  /root/.cargo/bin/rustup component add rust-analyzer\n\
   /root/.cargo/bin/cargo install wasm-pack\n\
   npm install -g typescript@5.8.3\n\
   rm -rf /var/www/html/*\n\
