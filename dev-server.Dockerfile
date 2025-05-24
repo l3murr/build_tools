@@ -33,7 +33,6 @@ fi\n\
 >> /docker-entrypoint.sh
 RUN echo 'server {\n\
     listen              80;\n\
-}\n\
 \n\
     location /assets {\n\
         root /var/www/html/frontend/dist/assets;\n\
@@ -43,7 +42,6 @@ RUN echo 'server {\n\
         proxy_pass http://localhost:3000;\n\
         proxy_set_header Host $host;\n\
     }\n\
-}\n\
 }\n\
 ' >> /etc/nginx/conf.d/default.conf
 RUN echo '[program:code-server]\n\
