@@ -32,14 +32,13 @@ fi\n\
 /usr/bin/supervisord & tail -f /dev/null'\
 >> /docker-entrypoint.sh
 RUN echo 'server {\n\
-    listen              80\n\
+    listen              80;\n\
 \n\
     location /assets {\n\
         root /var/www/html/frontend/dist/assets;\n\
     }\n\
 \n\
     location / {\n\
-        resolver kube-dns.kube-system.svc.cluster.local;\n\
         proxy_pass http://localhost:3000;\n\
         proxy_set_header Host $host;\n\
     }\n\
