@@ -34,8 +34,8 @@ fi\n\
 RUN echo 'server {\n\
     listen              80;\n\
 \n\
-    location /assets {\n\
-        root /var/www/html/frontend/dist/assets;\n\
+    location /assets/ {\n\
+        alias /var/www/html/frontend/dist/assets/;\n\
     }\n\
 \n\
     location / {\n\
