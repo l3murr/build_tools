@@ -31,6 +31,23 @@ else\n\
 fi\n\
 /usr/bin/supervisord & tail -f /dev/null'\
 >> /docker-entrypoint.sh
+RUN echo 'server {\n\
+    listen              80\n\
+\n\
+    location /assets {\n\
+        resolver kube-dns.kube-system.svc.cluster.local;\n\
+        proxy_set_header Host $host;\n\
+        proxy_pass http://websocket-service-1.default.svc.cluster.local;\n\
+    }\n\
+\n\
+    location / {\n\
+        resolver kube-dns.kube-system.svc.cluster.local;\n\
+        proxy_pass http://server-service-1.default.svc.cluster.local:3000;\n\
+        proxy_set_header Host $host;\n\
+    }\n\
+}\n\
+}\n\
+' >> /etc/nginx/conf.d/default.conf
 RUN echo '[program:code-server]\n\
 command=code-server --auth none --host 0.0.0.0\n\
 autostart=true\n\
