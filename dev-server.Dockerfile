@@ -35,14 +35,12 @@ RUN echo 'server {\n\
     listen              80\n\
 \n\
     location /assets {\n\
-        resolver kube-dns.kube-system.svc.cluster.local;\n\
-        proxy_set_header Host $host;\n\
-        proxy_pass http://websocket-service-1.default.svc.cluster.local;\n\
+        root /var/www/html/frontend/dist/assets;\n\
     }\n\
 \n\
     location / {\n\
         resolver kube-dns.kube-system.svc.cluster.local;\n\
-        proxy_pass http://server-service-1.default.svc.cluster.local:3000;\n\
+        proxy_pass http://localhost:3000;\n\
         proxy_set_header Host $host;\n\
     }\n\
 }\n\
