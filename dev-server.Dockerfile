@@ -16,6 +16,7 @@ fi\n\
 if [ -f /var/www/html/README.md ]; then\n\
   echo "chowning /var/www/html/backend/storage/ for www-data"\n\
   chown -R www-data:www-data /var/www/html/backend/storage/\n\
+  nginx\n\
 else\n\
   curl https://sh.rustup.rs -sSf | bash -s -- -y\n\
   /root/.cargo/bin/rustup install nightly-2024-05-20\n\
@@ -43,7 +44,7 @@ RUN echo 'server {\n\
         proxy_set_header Host $host;\n\
     }\n\
 }\n\
-' >> /etc/nginx/conf.d/default.conf
+' >> /etc/nginx/sites-enabled/default
 RUN echo '[program:code-server]\n\
 command=code-server --auth none --host 0.0.0.0\n\
 autostart=true\n\
