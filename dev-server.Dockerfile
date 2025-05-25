@@ -44,7 +44,7 @@ RUN echo 'server {\n\
         proxy_set_header Host $host;\n\
     }\n\
 }\n\
-' >> /etc/nginx/sites-enabled/default
+' > /etc/nginx/sites-enabled/default
 RUN echo '[program:code-server]\n\
 command=code-server --auth none --host 0.0.0.0\n\
 autostart=true\n\
