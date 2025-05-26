@@ -128,38 +128,14 @@ spec:
           imagePullPolicy: Never
           name: server-$$
           env:
-            - name: APP_ENV
-              value: "local"
-            - name: APP_KEY
-              value: "base64:tmngqCZPOfxduklCUye1co12Vb9Ep9qVOV1oPEhyj8c="
-            - name: APP_URL
-              value: "https://^^:**"
-            - name: APP_BASE_PATH
-              value: "/var/www/html/backend"
-            - name: LARAVEL_OCTANE
-              value: "1"
             - name: DB_USERNAME
               value: "root"
             - name: DB_PASSWORD
               value: "password"
-            - name: DB_DATABASE
-              value: "c45d86012a4e470091d7e186397a55a0"
-            - name: DB_HOST
+            - name: DATABASE_URL
               value: "mysql-service-$$.default.svc.cluster.local"
-            - name: DB_PORT
-              value: "3306"
-            - name: DB_WH_HOST
-              value: "mysql-service-$$.default.svc.cluster.local"
-            - name: DB_WH_PORT
-              value: "3306"
-            - name: SANCTUM_STATEFUL_DOMAINS
-              value: "https://^^:**"
-            - name: SESSION_DOMAIN
-              value: "^^"
-            - name: SHARED_ENCRYPTION_KEY
-              value: "SUPER_SECRET_KEY_SHHH"
-            - name: XDEBUG_SESSION
-              value: "1"
+            - name: ENCRYPTION_KEY
+              value: "testkey"
           ports:
             - containerPort: 80
               name: http
