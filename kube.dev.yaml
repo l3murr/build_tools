@@ -128,9 +128,9 @@ spec:
           imagePullPolicy: Never
           name: server-$$
           env:
-            - name: DB_USERNAME
+            - name: DATABASE_USERNAME
               value: "root"
-            - name: DB_PASSWORD
+            - name: DATABASE_PASSWORD
               value: "password"
             - name: DATABASE_URL
               value: "mysql-service-$$.default.svc.cluster.local"
