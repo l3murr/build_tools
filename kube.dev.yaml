@@ -128,12 +128,8 @@ spec:
           imagePullPolicy: Never
           name: server-$$
           env:
-            - name: DATABASE_USERNAME
-              value: "root"
-            - name: DATABASE_PASSWORD
-              value: "password"
             - name: DATABASE_URL
-              value: "mysql-service-$$.default.svc.cluster.local"
+              value: "mysql://root:password@mysql-service-$$.default.svc.cluster.local"
             - name: ENCRYPTION_KEY
               value: "testkey"
           ports:
