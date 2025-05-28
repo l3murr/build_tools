@@ -13,7 +13,7 @@ RUN echo '{\
         "proxy": {\
             "connect": {\
                 "enabled": true,\
-                "endpoint": "grpc://server-service-1.default.svc.cluster.local:30000",\
+                "endpoint": "http://server-service-1.default.svc.cluster.local/centrifugo/connect",\
                 "timeout": "600s",\
                 "http_headers": [\
                     "Cookie",\
@@ -23,7 +23,7 @@ RUN echo '{\
             },\
             "refresh": {\
                 "enabled": true,\
-                "endpoint": "grpc://server-service-1.default.svc.cluster.local:30000",\
+                "endpoint": "http://server-service-1.default.svc.cluster.local/centrifugo/refresh",\
                 "timeout": "600s"\
             }\
         }\
@@ -31,10 +31,10 @@ RUN echo '{\
     "channel": {\
         "proxy": {\
             "subscribe": {\
-                "endpoint": "grpc://server-service-1.default.svc.cluster.local:30000"\
+                "endpoint": "http://server-service-1.default.svc.cluster.local/centrifugo/subscribe"\
             },\
             "publish": {\
-                "endpoint": "grpc://server-service-1.default.svc.cluster.local:30000"\
+                "endpoint": "http://server-service-1.default.svc.cluster.local/centrifugo/publish"\
             }\
         },\
         "namespaces": [\
@@ -53,7 +53,7 @@ RUN echo '{\
     },\
     "rpc": {\
         "proxy": {\
-            "endpoint": "grpc://server-service-1.default.svc.cluster.local:30000",\
+            "endpoint": "http://server-service-1.default.svc.cluster.local/centrifugo/rpc",\
             "timeout": "600s",\
             "http_headers": [\
                 "Cookie"\
