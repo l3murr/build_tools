@@ -132,6 +132,8 @@ spec:
               value: "local"
             - name: DATABASE_URL
               value: "mysql://root:password@mysql-service-$$.default.svc.cluster.local/c45d86012a4e470091d7e186397a55a0"
+            - name: CACHE_URL
+              value: "http://cache-service-$$.default.svc.cluster.local"
             - name: ENCRYPTION_KEY
               value: "testkey"
           ports:
