@@ -22,7 +22,7 @@ else\n\
   /root/.cargo/bin/rustup install nightly-2024-05-20\n\
   /root/.cargo/bin/rustup component add rust-analyzer\n\
   /root/.cargo/bin/cargo install wasm-pack\n\
-  /root/.cargo/bin/cargo install diesel_cli\n\
+  /root/.cargo/bin/cargo install diesel_cli --no-default-features --features "mysql"\n\
   npm install -g typescript@5.8.3\n\
   rm -rf /var/www/html/*\n\
   GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:Timeless-Medical-International/tmnp.git /var/www/html\n\
