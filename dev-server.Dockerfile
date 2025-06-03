@@ -26,7 +26,7 @@ else\n\
   npm install -g typescript@5.8.3\n\
   rm -rf /var/www/html/*\n\
   GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@github.com:Timeless-Medical-International/tmnp.git /var/www/html\n\
-  cd /var/www/html/backend\n\
+  cd /var/www/html/server\n\
   npm run migrate:fresh\n\
   cd /var/www/html/frontend\n\
   npm i\n\
