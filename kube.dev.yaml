@@ -1,6 +1,27 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
+  name: nosql-$$
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nosql-$$
+  template:
+    metadata:
+      labels:
+        name: nosql-$$
+    spec:
+      containers:
+        - image: amazon/dynamodb-local:2.6.1
+          name: nosql-$$
+          ports:
+            - containerPort: 911
+              name: http
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
   name: cache-$$
 spec:
   replicas: 1
@@ -192,6 +213,33 @@ spec:
     - protocol: TCP
       port: 8000
       name: websocket
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nosql-service-$$
+spec:
+  selector:
+    name: nosql-$$
+  ports:
+    - protocol: TCP
+      port: 911
+      name: nosql
+  type: LoadBalancer
+------
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service-$$
+spec:
+  selector:
+    name: mysql-$$
+  ports:
+    - protocol: TCP
+      port: 3306
+      name: mysql
+  type: LoadBalancer
+---
 ---
 apiVersion: v1
 kind: Service
