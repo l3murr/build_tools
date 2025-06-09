@@ -240,7 +240,6 @@ spec:
       name: mysql
   type: LoadBalancer
 ---
----
 apiVersion: v1
 kind: Service
 metadata:
