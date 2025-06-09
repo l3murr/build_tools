@@ -16,7 +16,8 @@ spec:
         - image: amazon/dynamodb-local:2.6.1
           name: nosql-$$
           ports:
-            - containerPort: 911
+            - containerPort: 8911
+              hostPort: 8000
               name: http
 ---
 kind: Deployment
@@ -223,7 +224,7 @@ spec:
     name: nosql-$$
   ports:
     - protocol: TCP
-      port: 911
+      port: 8911
       name: nosql
   type: LoadBalancer
 ---
