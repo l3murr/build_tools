@@ -226,7 +226,7 @@ spec:
       port: 911
       name: nosql
   type: LoadBalancer
-------
+---
 apiVersion: v1
 kind: Service
 metadata:
