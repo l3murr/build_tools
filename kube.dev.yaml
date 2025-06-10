@@ -18,6 +18,13 @@ spec:
           ports:
             - containerPort: 8000
               name: nosql
+          volumeMounts:
+            - name: nosql-persistent-storage
+              mountPath: /home/dynamodblocal/data
+      volumes:
+        - name: nosql-persistent-storage
+          hostPath:
+            path: /data/nosql_$$
 ---
 kind: Deployment
 apiVersion: apps/v1
