@@ -16,8 +16,8 @@ spec:
         - image: amazon/dynamodb-local:2.6.1
           name: nosql-$$
           ports:
-            - containerPort: 8911
-              hostPort: 8000
+            - containerPort: 8000
+              hostPort: 8911
               name: http
 ---
 kind: Deployment
