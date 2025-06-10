@@ -17,7 +17,7 @@ spec:
           name: nosql-$$
           ports:
             - containerPort: 8000
-              name: http
+              name: nosql
 ---
 kind: Deployment
 apiVersion: apps/v1
