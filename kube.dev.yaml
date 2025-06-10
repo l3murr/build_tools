@@ -13,7 +13,7 @@ spec:
         name: nosql-$$
     spec:
       containers:
-        - image: tms-dynamodb:v2
+        - image: amazon/dynamodb-local:2.6.1
           name: nosql-$$
           ports:
             - containerPort: 8000
