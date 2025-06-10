@@ -17,7 +17,6 @@ spec:
           name: nosql-$$
           ports:
             - containerPort: 8000
-              hostPort: 8911
               name: http
 ---
 kind: Deployment
