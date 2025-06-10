@@ -224,6 +224,7 @@ spec:
   ports:
     - protocol: TCP
       port: 8911
+      targetPort: 8000
       name: nosql
   type: LoadBalancer
 ---
