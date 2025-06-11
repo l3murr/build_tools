@@ -240,9 +240,11 @@ spec:
     name: nosql-$$
   ports:
     - protocol: TCP
-      port: 8911
-      targetPort: 8000
-      name: nosql
+      port: 9200
+      name: http
+    - protocol: TCP
+      port: 9600
+      name: dashboard
   type: LoadBalancer
 ---
 apiVersion: v1
