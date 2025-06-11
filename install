@@ -61,6 +61,7 @@ main() {
     done
     nginx=$(minikube kubectl get pods | grep -o 'nginx-[0-9a-z-]*')
     mysql=$(minikube kubectl get pods | grep -o "mysql-$profile-[0-9a-z-]*")
+    minikube ssh "sudo chmod 0777 -R /data/nosql_1"
 }
 
 main "$@"
