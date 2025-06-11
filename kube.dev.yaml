@@ -248,9 +248,11 @@ spec:
   ports:
     - protocol: TCP
       port: 9200
+      targetPort: 9200
       name: http
     - protocol: TCP
       port: 9600
+      targetPort: 9600
       name: dashboard
   type: LoadBalancer
 ---
