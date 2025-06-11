@@ -25,7 +25,7 @@ spec:
             - name: "OPENSEARCH_JAVA_OPTS"
               value: "-Xms512m -Xmx512m"
             - name: "OPENSEARCH_INITIAL_ADMIN_PASSWORD"
-              value: "timelessadmin"
+              value: "Timeless2025!!"
           ports:
             - containerPort: 9200
               name: http
