@@ -30,6 +30,10 @@ spec:
               value: "-Xms512m -Xmx512m"
             - name: "OPENSEARCH_INITIAL_ADMIN_PASSWORD"
               value: "dR26Z7$IHLZ"
+            - name: "DISABLE_INSTALL_DEMO_CONFIG"
+              value: "true"
+            - name: "DISABLE_SECURITY_PLUGIN"
+              value: "true" 
           ports:
             - containerPort: 9200
               name: http
