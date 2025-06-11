@@ -15,6 +15,11 @@ spec:
       containers:
         - image: tms-dynamodb:v2
           name: nosql-$$
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              value: timeless
+            - name: AWS_SECRET_ACCESS_KEY
+              value: timeless
           ports:
             - containerPort: 8000
               name: nosql
