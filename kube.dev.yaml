@@ -37,8 +37,12 @@ spec:
           ports:
             - containerPort: 9200
               name: http
+            - containerPort: 9300
+              name: idk
             - containerPort: 9600
-              name: dashboard
+              name: idk2
+            - containerPort: 9650
+              name: idk3
           volumeMounts:
             - name: nosql-persistent-storage
               mountPath: /usr/share/opensearch/data
@@ -255,9 +259,17 @@ spec:
       targetPort: 9200
       name: http
     - protocol: TCP
+      port: 9300
+      targetPort: 9300
+      name: idk
+    - protocol: TCP
       port: 9600
       targetPort: 9600
-      name: dashboard
+      name: idk2
+    - protocol: TCP
+      port: 9650
+      targetPort: 9650
+      name: idk3
   type: LoadBalancer
 ---
 apiVersion: v1
