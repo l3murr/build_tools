@@ -189,6 +189,8 @@ spec:
               value: "memcache://cache-service-$$.default.svc.cluster.local:11211?verify_mode=none"
             - name: ENCRYPTION_KEY
               value: "testkey"
+            - name: OPENSEARCH_ENDPOINT
+              value: "http://nosql-service-$$.default.svc.cluster.local:9200"
           ports:
             - containerPort: 80
               name: http
