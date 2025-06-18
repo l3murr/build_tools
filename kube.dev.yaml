@@ -54,6 +54,27 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
+  name: opensearch-dashboard-$$
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: opensearch-dashboard-$$
+  template:
+    metadata:
+      labels:
+        name: opensearch-dashboard-$$
+    spec:
+      containers:
+        - image: opensearchproject/opensearch-dashboards:2
+          name: opensearch-dashboard-$$
+          ports:
+            - containerPort: 5601
+              name: http
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
   name: cache-$$
 spec:
   replicas: 1
@@ -285,6 +306,19 @@ spec:
     - protocol: TCP
       port: 3306
       name: mysql
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensearch-dashboard-service-$$
+spec:
+  selector:
+    name: opensearch-dashboard-$$
+  ports:
+    - protocol: TCP
+      port: 5601
+      name: http
   type: LoadBalancer
 ---
 apiVersion: v1
