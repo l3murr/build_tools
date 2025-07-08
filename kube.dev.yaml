@@ -220,6 +220,8 @@ spec:
           ports:
             - containerPort: 80
               name: http
+            - containerPort: 6420
+              name: backlog
             - containerPort: 8080
               name: coder
             - containerPort: 30000
@@ -340,6 +342,9 @@ spec:
     - protocol: TCP
       port: 80
       name: app
+    - protocol: TCP
+      port: 6420
+      name: backlog
     - protocol: TCP
       port: 30000
       name: websocket
