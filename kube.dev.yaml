@@ -362,6 +362,8 @@ spec:
   ports:
     - port: 8443
       name: app
+    - port: 6443
+      name: backlog
     - port: 8083
       name: coder
     - port: 5173
