@@ -228,6 +228,8 @@ spec:
               name: websocket
             - containerPort: 5173
               name: vite
+            - containerPort: 22
+              name: ssh
           volumeMounts:
             - name: server-persistent-storage
               mountPath: /var/www/html
@@ -338,19 +340,39 @@ spec:
   ports:
     - protocol: TCP
       port: 8080
+      targetPort: 8080
       name: coder
     - protocol: TCP
       port: 80
+      targetPort: 80
       name: app
     - protocol: TCP
-      port: 6420
-      name: backlog
-    - protocol: TCP
       port: 30000
+      targetPort: 30000
       name: websocket
     - protocol: TCP
       port: 5173
+      targetPort: 5173
       name: vite
+    - protocol: TCP
+      port: 6420
+      targetPort: 6420
+      name: backlog
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-ssh-service-$$
+spec:
+  selector:
+    name: server-$$
+  ports:
+    - protocol: TCP
+      port: 2222
+      targetPort: 22
+      name: ssh
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -362,7 +384,7 @@ spec:
   ports:
     - port: 8443
       name: app
-    - port: 6443
+    - port: 6420
       name: backlog
     - port: 8083
       name: coder
