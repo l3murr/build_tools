@@ -271,8 +271,8 @@ spec:
       port: 5173
       name: vite
     - protocol: TCP
-      port: 22
-      nodePort: 2222
+      port: 2222
+      targetPort: 22
       name: ssh
   type: LoadBalancer
 ---
