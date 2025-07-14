@@ -132,4 +132,21 @@ server {\n\
         proxy_set_header Host $host;\n\
     }\n\
 }\n\
+\n\
+server {\n\
+    listen              6443 ssl;\n\
+    ssl_certificate     /etc/ssl/certs/wai.crt;\n\
+    ssl_certificate_key /etc/ssl/private/wai.key;\n\
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;\n\
+    ssl_ciphers         HIGH:!aNULL:!MD5;\n\
+        \n\
+    location / {\n\
+        resolver kube-dns.kube-system.svc.cluster.local;\n\
+        proxy_http_version 1.1;\n\
+        proxy_set_header Upgrade $http_upgrade;\n\
+        proxy_set_header Connection "upgrade";\n\
+        proxy_pass http://server-service-1.default.svc.cluster.local:6420;\n\
+        proxy_set_header Host $host;\n\
+    }\n\
+}\n\
 ' >> /etc/nginx/conf.d/default.conf

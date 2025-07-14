@@ -13,18 +13,69 @@ spec:
         name: nosql-$$
     spec:
       containers:
-        - image: tms-dynamodb:v2
+        - image: opensearchproject/opensearch:3
           name: nosql-$$
+          env:
+            - name: "cluster.name"
+              value: "opensearch-cluster"
+            - name: "node.name"
+              value: "opensearch-node1"
+            - name: "discovery.seed_hosts"
+              value: "opensearch-node1"
+            - name: "cluster.initial_cluster_manager_nodes"
+              value: "opensearch-node1"
+            - name: "bootstrap.memory_lock"
+              value: "false"
+            - name: "OPENSEARCH_JAVA_OPTS"
+              value: "-Xms512m -Xmx512m"
+            - name: "OPENSEARCH_INITIAL_ADMIN_PASSWORD"
+              value: "dR26Z7$IHLZ"
+            - name: "DISABLE_INSTALL_DEMO_CONFIG"
+              value: "true"
+            - name: "DISABLE_SECURITY_PLUGIN"
+              value: "true" 
           ports:
-            - containerPort: 8000
-              name: nosql
+            - containerPort: 9200
+              name: http
+            - containerPort: 9300
+              name: idk
+            - containerPort: 9600
+              name: idk2
+            - containerPort: 9650
+              name: idk3
           volumeMounts:
             - name: nosql-persistent-storage
-              mountPath: /home/dynamodblocal/data
+              mountPath: /usr/share/opensearch/data
       volumes:
         - name: nosql-persistent-storage
           hostPath:
             path: /data/nosql_$$
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: opensearch-dashboard-$$
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: opensearch-dashboard-$$
+  template:
+    metadata:
+      labels:
+        name: opensearch-dashboard-$$
+    spec:
+      containers:
+        - image: opensearchproject/opensearch-dashboards:3
+          name: opensearch-dashboard-$$
+          env:
+            - name: "OPENSEARCH_HOSTS"
+              value: "[\"http://nosql-service-$$.default.svc.cluster.local:9200\"]"
+            - name: "DISABLE_SECURITY_DASHBOARDS_PLUGIN"
+              value: "true"
+          ports:
+            - containerPort: 5601
+              name: http
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -164,9 +215,13 @@ spec:
               value: "memcache://cache-service-$$.default.svc.cluster.local:11211?verify_mode=none"
             - name: ENCRYPTION_KEY
               value: "testkey"
+            - name: OPENSEARCH_ENDPOINT
+              value: "http://nosql-service-$$.default.svc.cluster.local:9200"
           ports:
             - containerPort: 80
               name: http
+            - containerPort: 6420
+              name: backlog
             - containerPort: 8080
               name: coder
             - containerPort: 30000
@@ -232,9 +287,21 @@ spec:
     name: nosql-$$
   ports:
     - protocol: TCP
-      port: 8911
-      targetPort: 8000
-      name: nosql
+      port: 9200
+      targetPort: 9200
+      name: http
+    - protocol: TCP
+      port: 9300
+      targetPort: 9300
+      name: idk
+    - protocol: TCP
+      port: 9600
+      targetPort: 9600
+      name: idk2
+    - protocol: TCP
+      port: 9650
+      targetPort: 9650
+      name: idk3
   type: LoadBalancer
 ---
 apiVersion: v1
@@ -253,6 +320,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: opensearch-dashboard-service-$$
+spec:
+  selector:
+    name: opensearch-dashboard-$$
+  ports:
+    - protocol: TCP
+      port: 5601
+      name: http
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: server-service-$$
 spec:
   selector:
@@ -264,6 +344,9 @@ spec:
     - protocol: TCP
       port: 80
       name: app
+    - protocol: TCP
+      port: 6420
+      name: backlog
     - protocol: TCP
       port: 30000
       name: websocket
@@ -286,6 +369,8 @@ spec:
   ports:
     - port: 8443
       name: app
+    - port: 6443
+      name: backlog
     - port: 8083
       name: coder
     - port: 5173
