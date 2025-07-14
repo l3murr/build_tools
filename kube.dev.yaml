@@ -173,6 +173,8 @@ spec:
               name: websocket
             - containerPort: 5173
               name: vite
+            - containerPort: 22
+              name: ssh
           volumeMounts:
             - name: server-persistent-storage
               mountPath: /var/www/html
@@ -268,6 +270,11 @@ spec:
     - protocol: TCP
       port: 5173
       name: vite
+    - protocol: TCP
+      port: 22
+      nodePort: 2222
+      name: ssh
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service

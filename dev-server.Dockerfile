@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 RUN apt-get update && apt-get install -y tzdata apt-utils
-RUN apt-get install -y software-properties-common libterm-readline-gnu-perl curl
+RUN apt-get install -y software-properties-common libterm-readline-gnu-perl curl openssh-server
 RUN mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     NODE_MAJOR=22 && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" > /etc/apt/sources.list.d/nodesource.list && \
@@ -53,6 +53,15 @@ command=code-server --auth none --host 0.0.0.0\n\
 autostart=true\n\
 autorestart=true'\
 >> /etc/supervisor/conf.d/code-server.conf
+RUN echo '[program:sshd]\n\
+command=/usr/sbin/sshd -D\n\
+autostart=true\n\
+autorestart=true'\
+>> /etc/supervisor/conf.d/sshd.conf
+RUN mkdir -p /var/run/sshd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    echo 'root:dev' | chpasswd
 RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR /var/www/html
