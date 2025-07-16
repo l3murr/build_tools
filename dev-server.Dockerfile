@@ -62,6 +62,7 @@ autorestart=true'\
 RUN mkdir -p /var/run/sshd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    echo 'AcceptEnv *' >> /etc/ssh/sshd_config && \
     echo 'root:dev' | chpasswd && \
     chsh -s /bin/zsh root
 RUN chmod +x /docker-entrypoint.sh
