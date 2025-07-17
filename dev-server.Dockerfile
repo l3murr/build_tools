@@ -10,6 +10,7 @@ RUN mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://code-server.dev/install.sh | sh
 RUN echo '#!/bin/sh\n\
 cd /var/www/html\n\
+env > /etc/environment\n\
 if [ ! -f /root/.bashrc ]; then\n\
     echo ". /git-completion.bash\nexport PATH=\"/usr/local/go/bin:$PATH\"" > /root/.bashrc\n\
 fi\n\
