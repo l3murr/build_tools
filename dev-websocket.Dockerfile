@@ -43,7 +43,7 @@ RUN echo '{\
                 "subscribe_proxy_enabled": true\
             },\
             {\
-                "name": "appliance",\
+                "name": "microseries",\
                 "allow_subscribe_for_client": true,\
                 "allow_subcribe_for_anonymous": true,\
                 "allow_publish_for_subscriber": true,\
@@ -65,7 +65,7 @@ RUN echo '{\
                 "proxy_enabled": true\
             },\
             {\
-                "name": "appliance",\
+                "name": "microseries",\
                 "proxy_enabled": true\
             }\
         ]\
