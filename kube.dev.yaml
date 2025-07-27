@@ -219,6 +219,8 @@ spec:
               value: "http://nosql-service-$$.default.svc.cluster.local:9200"
             - name: DOMAIN
               value: "^^"
+            - name: WEBSOCKET_API_KEY
+              value: "test"
           ports:
             - containerPort: 80
               name: http
