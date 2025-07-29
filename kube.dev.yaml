@@ -221,7 +221,7 @@ spec:
               value: "^^"
             - name: WEBSOCKET_API_KEY
               value: "test"
-            - name: CACHE_TTL
+            - name: CACHE_CONTEXT_TTL
               value: 10
           ports:
             - containerPort: 80
