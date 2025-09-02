@@ -46,8 +46,42 @@ main() {
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-mysql.Dockerfile | docker build -t tms-mysql:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-websocket.Dockerfile | docker build -t tms-websocket:v2 -"
     minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-dynamodb.Dockerfile | docker build -t tms-dynamodb:v2 -"
+    minikube ssh "curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/dev-minio.Dockerfile | docker build -t tms-minio:v2 -"
     curl --silent https://raw.githubusercontent.com/l3murr/build_tools/refs/heads/main/kube.dev.yaml | sed "s/\\$\\$/$profile/g" | sed "s/\\^\\^/$host/g" | sed "s/\\*\\*/$app_port/g" | minikube kubectl apply -- -f -
-    
+
+    # Setup MinIO bucket
+    echo "Setting up MinIO bucket for profile $profile..."
+    minikube kubectl -- wait --for=condition=ready pod -l name=minio-$profile --timeout=120s
+
+    # Get MinIO NodePort
+    minio_ip=$(minikube ip)
+    minio_port=$(minikube kubectl -- get service minio-service-$profile -o jsonpath='{.spec.ports[0].nodePort}' 2>/dev/null || echo "")
+
+    if [[ -n "$minio_port" ]]; then
+        minio_endpoint="http://$minio_ip:$minio_port"
+
+        # Check if bucket exists and create if it doesn't
+        bucket_exists=$(curl -s -o /dev/null -w "%{http_code}" "$minio_endpoint/hl7-rules-dev" --user "minioadmin:minioadmin" 2>/dev/null || echo "000")
+
+        if [[ "$bucket_exists" != "200" ]]; then
+            echo "Creating S3 bucket 'hl7-rules-dev'..."
+            curl -X PUT "$minio_endpoint/hl7-rules-dev" --user "minioadmin:minioadmin" -H "Content-Length: 0" >/dev/null 2>&1
+            if [[ $? -eq 0 ]]; then
+                echo "✅ MinIO bucket 'hl7-rules-dev' created successfully"
+            else
+                echo "⚠️  MinIO bucket creation failed, but MinIO is running"
+            fi
+        else
+            echo "✅ MinIO bucket 'hl7-rules-dev' already exists"
+        fi
+
+        echo "MinIO Console: http://$minio_ip:$(minikube kubectl -- get service minio-service-$profile -o jsonpath='{.spec.ports[1].nodePort}' 2>/dev/null)"
+        echo "MinIO API: $minio_endpoint"
+        echo "Credentials: minioadmin / minioadmin"
+    else
+        echo "⚠️  Could not get MinIO NodePort, bucket setup skipped"
+    fi
+
     keys=($(ls ~/.ssh))
     SSH_REGEX='^id_[a-zA-Z0-9]*'
     PK_REGEX='^id_[a-zA-Z0-9]*$'
