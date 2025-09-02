@@ -54,6 +54,59 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
+  name: minio-$$
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: minio-$$
+  template:
+    metadata:
+      labels:
+        name: minio-$$
+    spec:
+      containers:
+        - image: tms-minio:v2
+          imagePullPolicy: Never
+          name: minio-$$
+          args:
+            - server
+            - /data
+            - --console-address
+            - ":9001"
+          env:
+            - name: MINIO_ROOT_USER
+              value: "minioadmin"
+            - name: MINIO_ROOT_PASSWORD
+              value: "minioadmin"
+          ports:
+            - containerPort: 9000
+              name: api
+            - containerPort: 9001
+              name: console
+          volumeMounts:
+            - name: minio-persistent-storage
+              mountPath: /data
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: 9000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: 9000
+            initialDelaySeconds: 30
+            periodSeconds: 30
+      volumes:
+        - name: minio-persistent-storage
+          hostPath:
+            path: /data/minio_$$
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
   name: opensearch-dashboard-$$
 spec:
   replicas: 1
@@ -70,7 +123,7 @@ spec:
           name: opensearch-dashboard-$$
           env:
             - name: "OPENSEARCH_HOSTS"
-              value: "[\"http://nosql-service-$$.default.svc.cluster.local:9200\"]"
+              value: '["http://nosql-service-$$.default.svc.cluster.local:9200"]'
             - name: "DISABLE_SECURITY_DASHBOARDS_PLUGIN"
               value: "true"
           ports:
@@ -223,6 +276,18 @@ spec:
               value: "test"
             - name: CACHE_CONTEXT_TTL
               value: "10"
+            - name: AWS_ENDPOINT_URL
+              value: "http://minio-service-$$.default.svc.cluster.local:9000"
+            - name: AWS_ACCESS_KEY_ID
+              value: "minioadmin"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "minioadmin"
+            - name: AWS_DEFAULT_REGION
+              value: "us-east-1"
+            - name: S3_BUCKET
+              value: "hl7-rules-dev"
+            - name: ENABLE_S3
+              value: "true"
           ports:
             - containerPort: 80
               name: http
@@ -308,6 +373,24 @@ spec:
       port: 9650
       targetPort: 9650
       name: idk3
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service-$$
+spec:
+  selector:
+    name: minio-$$
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+      name: api
+    - protocol: TCP
+      port: 9001
+      targetPort: 9001
+      name: console
   type: LoadBalancer
 ---
 apiVersion: v1
